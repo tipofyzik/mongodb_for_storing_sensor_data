@@ -1,1 +1,1 @@
-# mongodb_for_storing_sensor_data
+# Mongo database for storing IoT sensor data
