@@ -5,7 +5,7 @@ from SensorMongoDB import SensorMongoDB
 
 
 
-iot_data = pd.read_csv("data/iot_telemetry_data.csv")
+iot_data = pd.read_csv("./data/iot_telemetry_data.csv")
 analyze_dataset = True 
 if analyze_dataset:
     data_analyzer = DataAnalyzer(iot_data)
