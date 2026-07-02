@@ -38,6 +38,13 @@ class DataAnalyzer:
         self.check_missing_values()
         self.check_data_types()
         print(self.data.head(10))
+    
+    def remove_duplicates(self):
+        """
+        Remove duplicate rows from the dataset.
+        """
+        self.data = self.data.drop_duplicates()
+        return self.data
 
     def get_column_names(self) -> list[str]:
         """

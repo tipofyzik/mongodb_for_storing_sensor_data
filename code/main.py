@@ -10,7 +10,7 @@ analyze_dataset = True
 if analyze_dataset:
     data_analyzer = DataAnalyzer(iot_data)
     # data_analyzer.analyze()
-    iot_data = iot_data.drop_duplicates()
+    iot_data = data_analyzer.remove_duplicates()
 
     # column_names = data_analyzer.get_column_names()
     # print("\nColumn names:")
