@@ -16,4 +16,4 @@ db.createCollection(
 );
 
 // Creating additional index for faster time-based queries
-db.sensor_readings.createIndex({ "timestamp": -1 });
+db.sensor_readings.createIndex({ "ts": -1 });
