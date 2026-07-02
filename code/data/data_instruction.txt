@@ -1,0 +1,3 @@
+Download the "Environmental Sensor Telemetry Data" dataset from Kaggle and put the .csv table into this folder
+
+https://www.kaggle.com/datasets/garystafford/environmental-sensor-data-132k
