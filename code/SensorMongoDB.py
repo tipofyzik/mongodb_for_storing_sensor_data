@@ -13,6 +13,15 @@ class SensorMongoDB:
         self.db = self.client[db_name]
         self.collection = self.db["sensor_readings"]
 
+    def check_connection(self):
+        try:
+            self.client.admin.command("ping")
+            print("MongoDB connection: OK")
+            return True
+        except Exception as e:
+            print("MongoDB connection failed:", e)
+            return False
+
     # -----------------------------
     # Single insert (for testing)
     # -----------------------------

@@ -23,6 +23,24 @@ class DataAnalyzer:
         print("Missing values in each column:")
         print(missing_values)
 
+    def handle_missing_values(self, strategy: str = "drop"):
+        """
+        Handle missing values in the dataset based on the specified strategy.
+        
+        Params:
+        strategy (str): The strategy to handle missing values. Options are "drop" or "fill".
+                        - "drop": Drop rows with any missing values.
+                        - "fill": Fill missing values with the mean of the column.
+        """
+        if strategy == "drop":
+            self.data = self.data.dropna()
+            print("Dropped rows with missing values.")
+        elif strategy == "fill":
+            self.data = self.data.fillna(self.data.mean())
+            print("Filled missing values with column means.")
+        else:
+            raise ValueError("Invalid strategy. Use 'drop' or 'fill'.")
+
     def check_data_types(self):
         """
         Check the data types of each column in the dataset and print them.

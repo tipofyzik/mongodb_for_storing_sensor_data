@@ -9,17 +9,15 @@ iot_data = pd.read_csv("./data/iot_telemetry_data.csv")
 analyze_dataset = True 
 if analyze_dataset:
     data_analyzer = DataAnalyzer(iot_data)
-    # data_analyzer.analyze()
+    data_analyzer.analyze()
+    data_analyzer.handle_missing_values(strategy="drop")
     iot_data = data_analyzer.remove_duplicates()
-
-    # column_names = data_analyzer.get_column_names()
-    # print("\nColumn names:")
-    # print(column_names)
 
 # ['ts', 'device', 'co', 'humidity', 'light', 'lpg', 'motion', 'smoke', 'temp'] -- column_names
 
 # Connecting to MongoDB (inside Docker-network or locally)
 database = SensorMongoDB()
+database.check_connection()
 # Data should be cleaned as MongoDB stores as a 
 database.clear()
 batch_size = 1000
