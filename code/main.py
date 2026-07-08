@@ -32,6 +32,7 @@ insert = True
 if insert:
     # Inserting the base columns into MongoDB in batches
     database.insert_batch(data_list=iot_data[base_columns].to_dict("records"), batch_size=batch_size)
+    database.check_connection()
     print("Inserted all data into MongoDB in batches of {}.".format(batch_size))
     print("\nTotal rows in the dataset: {}".format(len(iot_data)))
     print(f"Total documents in collection: {database.count_documents()}\n")
@@ -45,6 +46,7 @@ update = True
 if update:
     # Adding extra columns to the existing records in MongoDB
     database.update_batch(update_rows[extra_columns].to_dict("records"))
+    database.check_connection()
 
     # Checking the latest records in MongoDB
     print (f"\n{n_records} random records after adding extra columns")
@@ -56,6 +58,7 @@ if update:
 alternative = False
 if alternative:
     database.insert_batch(data_list=update_rows[extra_columns].to_dict("records"), batch_size=batch_size)
+    database.check_connection()
 
     # Checking the latest records in MongoDB
     print (f"\n{n_records} random records after adding extra columns")
