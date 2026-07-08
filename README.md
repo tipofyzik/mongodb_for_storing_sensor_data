@@ -18,7 +18,6 @@ As a city operator, I want new sensor types to be added without changing the who
 As a city operator, I want incorrect or missing sensor data to be detected so that unreliable measurements do not affect further analysis.
 
 _Maintenance engineer:_  
-As a maintenance engineer, I want to verify that sensors are sending data regularly so that malfunctioning devices can be identified quickly.  
 As a maintenance engineer, I want the data ingestion service to report errors when the database is unavailable so that problems can be resolved.
 
 _Data analyst_  
