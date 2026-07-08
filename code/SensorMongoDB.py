@@ -1,4 +1,4 @@
-from pymongo import MongoClient, InsertOne, UpdateOne
+from pymongo import MongoClient, UpdateOne
 
 
 
@@ -31,26 +31,18 @@ class SensorMongoDB:
     # -----------------------------
     def insert_batch(self, data_list: list[dict], batch_size: int = 1000):
         """
-        Insert sensor data in batches (required by task).
-        Much faster than insert_one in loop.
+        Insert sensor data in batches.
 
         Params:
             data_list (list[dict]): A list of dictionaries containing sensor reading data.
             batch_size (int): Number of records to insert in each batch. Default is 1000.
         """
-        operations = []
-
-        for _, item in enumerate(data_list):
-            operations.append(InsertOne(item))
-
-            # flush batch
-            if len(operations) >= batch_size:
-                self.collection.bulk_write(operations)
-                operations = []
-
-        # remainder
-        if operations:
-            self.collection.bulk_write(operations)
+        for i in range(0, len(data_list), batch_size):
+            batch = data_list[i:i + batch_size]
+            self.collection.insert_many(
+                batch,
+                ordered=False
+            )
 
     def update_batch(self, data_list: list[dict], batch_size: int = 1000):
         operations = []
@@ -73,7 +65,6 @@ class SensorMongoDB:
                     upsert=False
                 )
             )
-            
 
             if len(operations) >= batch_size:
                 results = self.collection.bulk_write(operations, ordered=False)
@@ -100,6 +91,9 @@ class SensorMongoDB:
                 ]
             })
         )
+
+    def count_documents(self):
+        return self.collection.count_documents({})
 
     def clear(self):
         """
