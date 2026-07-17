@@ -38,6 +38,8 @@ As a maintenance engineer, I want the data ingestion service to report errors wh
 Solution:  
 The `SensorMongoDB` class implements connection monitoring using the `check_connection()` method. Database operations are wrapped with exception handling, and failures are recorded using Python logging. The system creates log entries containing timestamps, severity levels, and error descriptions, allowing maintenance engineers to investigate problems.
 
+---
+
 _Data analyst_  
 As a data analyst, I want to retrieve historical sensor measurements efficiently so that I can analyze environmental trends.  
 
