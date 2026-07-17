@@ -20,8 +20,25 @@ As a city operator, I want sensor measurements to be stored automatically so tha
 As a city operator, I want new sensor types to be added without changing the whole database structure so that the system can be expanded in the future.  
 As a city operator, I want incorrect or missing sensor data to be detected so that unreliable measurements do not affect further analysis.
 
+Solution:
+**Store sensor measurements automatically**
+The `DataPipeline` class provides ingestion of IoT telemetry data. The dataset is loaded, processed, and inserted into MongoDB using batch insertion. The `insert_batch()` method in the `SensorMongoDB` class stores measurements in batches of 1,000 records, which improves performance when handling larger datasets.
+
+**Add new sensor types without changing the database structure**
+MongoDB was selected because of its flexible document-based structure. Initially, only the core attributes (`ts`, `device`, `temp`, and `humidity`) are stored. Additional sensor attributes (`co`, `lpg`, `smoke`, `motion`, and `light`) are added later using the `update_batch()` method. This demonstrates that new sensor measurements can be introduced without redesigning the database schema.
+
+**Detect incorrect or missing sensor data**
+The `DataAnalyzer` class is responsible for data quality checks before ingestion. It analyzes the dataset, detects missing values, removes incomplete records or fills missing values depending on the selected strategy, and removes duplicate measurements before storing the data.
+
 _Maintenance engineer:_  
 As a maintenance engineer, I want the data ingestion service to report errors when the database is unavailable so that problems can be resolved.
 
+Solution:
+The `SensorMongoDB` class implements connection monitoring using the `check_connection()` method. Database operations are wrapped with exception handling, and failures are recorded using Python logging. The system creates log entries containing timestamps, severity levels, and error descriptions, allowing maintenance engineers to investigate problems.
+
 _Data analyst_  
 As a data analyst, I want to retrieve historical sensor measurements efficiently so that I can analyze environmental trends.  
+
+Solution:
+The system provides query methods for retrieving stored measurements from MongoDB. Analysts can retrieve records using specific key combinations (`ts` and `device`) or search by selected sensor attributes. The `distinct()` functionality allows users to retrieve available unique values for a field and then request all historical measurements related to the selected value.  
+For example, an analyst can select a specific sensor device and retrieve all historical measurements recorded by that device for further environmental trend analysis.
