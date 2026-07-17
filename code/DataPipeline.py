@@ -23,8 +23,8 @@ class DataPipeline:
         self.extra_columns = ['ts', 'device','co', 'lpg', 'smoke', 'motion', 'light']
 
         self.n_records = 5
-        self.update_rows = self.iot_data[:self.batch_size]
-        self.test_rows = self.update_rows.sample(n=self.n_records)
+        self.update_rows = None
+        self.test_rows = None
 
     def analyze_and_clean_data(self, strategy: str = "drop"):
         """
@@ -49,11 +49,23 @@ class DataPipeline:
         It should be cleaned as MongoDB stores 
         """
         self.database.clear()
+        self.update_rows = None
+        self.test_rows = None
+
+    def prepare_update_data(self):
+        """
+        Prepare records used for update demonstration.
+        """
+        self.update_rows = self.iot_data[:self.batch_size]
+        self.test_rows = self.update_rows.sample(n=self.n_records)
 
     def check_latest_records(self):
         """
         Check the latest records in MongoDB based on the test rows.
         """
+        if self.test_rows is None:
+            print("No test records available.")
+            return
         print(f"\n{self.n_records} random records before adding extra columns")
         for i, last_record in enumerate(self.database.get_by_keys(keys=list(zip(self.test_rows["ts"], self.test_rows["device"])))):
             print(f"Record {i+1}: {last_record}")
@@ -64,6 +76,7 @@ class DataPipeline:
         """
         self.database.insert_batch(data_list=self.iot_data[self.base_columns].to_dict("records"), 
                                    batch_size=self.batch_size)
+        self.prepare_update_data()
         print("Inserted all data into MongoDB in batches of {}.".format(self.batch_size))
         print("\nTotal rows in the dataset: {}".format(len(self.iot_data)))
         print(f"Total documents in collection: {self.database.count_documents()}\n")
@@ -73,6 +86,9 @@ class DataPipeline:
         """
         Update existing records in MongoDB with extra columns.
         """
+        if self.update_rows is None:
+            print("No update records available.")
+            return
         self.database.update_batch(data_list=self.update_rows[self.extra_columns].to_dict("records"),
                                    batch_size=self.batch_size)
         self.check_latest_records()
@@ -82,6 +98,9 @@ class DataPipeline:
         An alternative strategy to update existing records in MongoDB by adding new documents.
         This preserves timestamps and device identifiers, which helps in matching new data with old data.
         """
+        if self.update_rows is None:
+            print("No update records available.")
+            return
         self.database.insert_batch(data_list=self.update_rows[self.extra_columns].to_dict("records"), 
                                    batch_size=self.batch_size)
         self.database.check_connection()
@@ -89,6 +108,9 @@ class DataPipeline:
 
     def retrieve_by_unique_value(self, key: str):
         values = self.database.get_unique_values(key)
+        if not values:
+            print(f"No data available for field '{key}'.")
+            return
         print(f"\nUnique values for {key}:")
         for i, value in enumerate(values):
             print(f"{i+1}. {value}")

@@ -9,6 +9,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+
 class SensorMongoDB:
     """
     Simple wrapper class for MongoDB sensor data storage.
@@ -165,6 +166,10 @@ class SensorMongoDB:
         """
         try:
             values = self.collection.distinct(key)
+            if not values:
+                logger.warning("No unique values found for key: %s", key)
+                print(f"No values found for field '{key}'.")
+                return 
             logger.info("Retrieved %s unique values for key: %s", len(values), key)
             return values
         except Exception as e:

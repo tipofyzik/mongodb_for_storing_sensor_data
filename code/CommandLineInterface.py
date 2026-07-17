@@ -16,7 +16,6 @@ class CommandLineInterface:
             "Insert sensor data": self.insert_data,
             "Update existing records": self.update_records,
             "Alternative update strategy": self.alternative_update,
-            "Check records": self.check_records,
             "Database information": self.database_information,
             "Retrieve records": self.retrieve_records,
             "View logs": self.view_logs,
@@ -32,7 +31,6 @@ class CommandLineInterface:
                 "Insert sensor data",
                 "Update existing records",
                 "Alternative update strategy",
-                "Check records",
                 "Database information",
                 "Retrieve records",
                 "View logs",
@@ -89,9 +87,6 @@ class CommandLineInterface:
     def alternative_update(self):
         self.pipeline.alternative_update_strategy()
 
-    def check_records(self):
-        self.pipeline.check_latest_records()
-
     def database_information(self):
         info_handler = {
             "Count documents": self.show_document_count,
@@ -136,7 +131,6 @@ class CommandLineInterface:
             "Select field:",
             choices=fields
         ).ask()
-
         self.pipeline.retrieve_by_unique_value(key)
 
     def back_to_menu(self):
