@@ -4,9 +4,9 @@ To run this project, follow the instruction below:
 1. Download the repository "code", download [Environmental Sensor Telemetry Data](https://www.kaggle.com/datasets/garystafford/environmental-sensor-data-132k) from kaggle and put it into "data" folder inside "code" directory.  
 2. Download Docker Desktop and run it.  
 3. Open CLI or IDE (integrated development environment) in the project directory. Then run "_**docker compose up -d --build**_" in the console to create docker images and run containers in the background. To stop containers run "_**docker compose down**_".
+4. In order to start the program itself and interact with the database via CLI, run "_**docker exec -it sensor_loader python main.py**_" in the console. You will get the menu where you can choose among different options. In order to run commands connected to the database ():  
+<img width="386" height="273" alt="image" src="https://github.com/user-attachments/assets/1138aa8c-2465-4313-853c-3359c0e3d914" />
 
-
-docker exec -it sensor_loader python main.py
 
 
 The program automatically loads the initial dataset with four primary columns (ts, device, temp, humidity) into MongoDB. For testing purposes, it then updates only the first 1,000 rows by adding the remaining columns (co, lpg, smoke, motion, light). Finally, to demonstrate that the process works correctly, the program displays five randomly selected records from the updated subset both before and after the update.
