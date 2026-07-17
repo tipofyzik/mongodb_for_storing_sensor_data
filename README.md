@@ -29,6 +29,7 @@ MongoDB was selected because of its flexible document-based structure. Initially
 
 **Detect incorrect or missing sensor data**
 The `DataAnalyzer` class is responsible for data quality checks before ingestion. It analyzes the dataset, detects missing values, removes incomplete records or fills missing values depending on the selected strategy, and removes duplicate measurements before storing the data.
+
 ---
 
 _Maintenance engineer:_  
