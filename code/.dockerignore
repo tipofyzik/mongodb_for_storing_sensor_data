@@ -6,5 +6,7 @@
 !data/**
 !DataAnalyzer.py
 !SensorMongoDB.py
+!DataPipeline.py
+!CommandLineInterface.py
 !main.py
 !requirements.txt

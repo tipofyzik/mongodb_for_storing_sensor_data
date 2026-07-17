@@ -1,5 +1,12 @@
 from pymongo import MongoClient, UpdateOne
+import logging
 
+logging.basicConfig(
+    filename="./logs/database.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
 class SensorMongoDB:
@@ -12,13 +19,25 @@ class SensorMongoDB:
         self.client = MongoClient(uri)
         self.db = self.client[db_name]
         self.collection = self.db["sensor_readings"]
+        logger.info(
+            "MongoDB client initialized. Database: %s, Collection: sensor_readings",
+            db_name
+        )
 
     def check_connection(self):
         try:
             self.client.admin.command("ping")
+            logger.info(
+                "MongoDB connection successful"
+            )
+
             print("MongoDB connection: OK")
             return True
         except Exception as e:
+            logger.exception(
+                "MongoDB unavailable: %s",
+                e
+            )
             print("MongoDB connection failed:", e)
             return False
 
@@ -33,7 +52,21 @@ class SensorMongoDB:
         Params:
             data (dict): A dictionary containing sensor reading data.        
         """
-        return self.collection.insert_one(data)
+        try:
+            result = self.collection.insert_one(data)
+            logger.info(
+                "Inserted single sensor reading. ID: %s",
+                result.inserted_id
+            )
+            print("Sensor reading inserted successfully")
+            return result
+        except Exception as e:
+            logger.exception(
+                "Failed to insert sensor reading: %s",
+                e
+)
+            print("Failed to insert sensor reading:", e)
+            raise e
 
     # -----------------------------
     # Batch insert (main requirement)
@@ -46,44 +79,62 @@ class SensorMongoDB:
             data_list (list[dict]): A list of dictionaries containing sensor reading data.
             batch_size (int): Number of records to insert in each batch. Default is 1000.
         """
-        for i in range(0, len(data_list), batch_size):
-            batch = data_list[i:i + batch_size]
-            self.collection.insert_many(
-                batch,
-                ordered=False
-            )
+        logger.info("Starting batch insertion. Total records: %s, Batch size: %s", len(data_list), batch_size)
+
+        try:            
+            for i in range(0, len(data_list), batch_size):
+                batch = data_list[i:i + batch_size]
+                self.collection.insert_many(
+                    batch,
+                    ordered=False
+                )
+                logger.info("Inserted batch %s-%s", i, i + len(batch))
+            logger.info("Batch insertion completed. Total inserted records: %s", len(data_list))
+        except Exception as e:
+            logger.exception("Batch insertion failed: %s", e)
+            print("Batch insertion failed:", e)
+            raise
 
     def update_batch(self, data_list: list[dict], batch_size: int = 1000):
-        operations = []
+        logger.info("Starting batch update. Records: %s, Batch size: %s", len(data_list), batch_size)
 
-        for item in data_list:
-            filter_query = {
-                "ts": item["ts"],
-                "device": item["device"]
-            }
+        try:
+            operations = []
+            for item in data_list:
+                filter_query = {
+                    "ts": item["ts"],
+                    "device": item["device"]
+                }
 
-            update_fields = {
-                k: v for k, v in item.items()
-                if k not in ["ts", "device"]
-            }
+                update_fields = {
+                    k: v for k, v in item.items()
+                    if k not in ["ts", "device"]
+                }
 
-            operations.append(
-                UpdateOne(
-                    filter_query,
-                    {"$set": update_fields},
-                    upsert=False
+                operations.append(
+                    UpdateOne(
+                        filter_query,
+                        {"$set": update_fields},
+                        upsert=False
+                    )
                 )
-            )
 
-            if len(operations) >= batch_size:
-                results = self.collection.bulk_write(operations, ordered=False)
-                print("matched:", results.matched_count)
-                print("modified:", results.modified_count)
-                operations = []
+                if len(operations) >= batch_size:
+                    results = self.collection.bulk_write(operations, ordered=False)
+                    logger.info("matched: %s", results.matched_count)
+                    logger.info("modified: %s", results.modified_count)
+                    print("matched:", results.matched_count)
+                    print("modified:", results.modified_count)
+                    operations = []
 
-        if operations:
-            self.collection.bulk_write(operations, ordered=False)
-        print(f"Updated {len(data_list)} records in batches of {batch_size}.")
+            if operations:
+                self.collection.bulk_write(operations, ordered=False)
+            logger.info("Updated %s records in batches of %s.", len(data_list), batch_size)
+            print(f"Updated {len(data_list)} records in batches of {batch_size}.")
+        except Exception as e:
+            logger.exception("Batch update failed: %s", e)
+            print("Batch update failed:", e)
+            raise
 
     # -----------------------------
     # Query readyings by filter (for testing)
@@ -92,20 +143,77 @@ class SensorMongoDB:
         """
         keys: [(ts, device), ...]
         """
-        return list(
-            self.collection.find({
-                "$or": [
-                    {"ts": ts, "device": device}
-                    for ts, device in keys
-                ]
-            })
-        )
+        try:
+            records = list(
+                self.collection.find({
+                    "$or": [
+                        {"ts": ts, "device": device}
+                        for ts, device in keys
+                    ]
+                })
+            )
+            logger.info("Retrieved %s records by keys", len(records))
+            return records
+        except Exception as e:
+            logger.exception("Failed to retrieve records by keys: %s", e)
+            print("Failed to retrieve records by keys:", e)
+            raise
+
+    def get_unique_values(self, key: str):
+        """
+        Retrieve unique values for a specific field.
+        """
+        try:
+            values = self.collection.distinct(key)
+            logger.info("Retrieved %s unique values for key: %s", len(values), key)
+            return values
+        except Exception as e:
+            logger.exception("Failed to retrieve unique values: %s", e)
+            print("Failed to retrieve unique values:", e)
+            raise
+
+    def get_by_field(self, key: str, value):
+        """
+        Retrieve documents by specific field value.
+        """
+        try:
+            records = list(
+                self.collection.find({
+                    key: value
+                })
+            )
+            logger.info(
+                "Retrieved %s records where %s=%s",
+                len(records),
+                key,
+                value
+            )
+            return records
+        except Exception as e:
+            logger.exception("Failed to retrieve records by field: %s", e)
+            print("Failed to retrieve records:", e)
+            raise
 
     def count_documents(self):
-        return self.collection.count_documents({})
+        try:
+            count = self.collection.count_documents({})
+            logger.info("Total documents in collection: %s", count)
+            return count
+        except Exception as e:
+            logger.exception("Failed to count documents: %s", e)
+            print("Failed to count documents", e)
+            raise
 
     def clear(self):
         """
-        Delete all data. For testing purposes.
+        Delete all data. Required as MongoDB stores documents as seperate objects. 
+        If not cleared, the database will store duplicate of the entire dataset. 
         """
-        self.collection.delete_many({})
+        try:
+            result = self.collection.delete_many({})
+            logger.info("Database cleared. Deleted documents: %s", result.deleted_count)
+            print(f"Database cleared. Deleted documents: {result.deleted_count}")
+        except Exception as e:
+            logger.exception("Failed to clear database: %s", e)
+            print("Failed to clear database:", e)
+            raise

@@ -29,6 +29,9 @@ services:
 
     volumes:
       - ./data:/app/data
+      - ./logs:/app/logs
+    stdin_open: true
+    tty: true
 
     command: python main.py
 
