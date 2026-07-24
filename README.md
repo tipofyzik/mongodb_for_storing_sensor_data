@@ -32,16 +32,13 @@ The `DataAnalyzer` class is responsible for data quality checks before ingestion
 <table>
   <tr>
     <td>
-      
+      <img width="407" height="184" alt="image" src="https://github.com/user-attachments/assets/99d281bb-8c13-47c3-978a-0a45416e8e47" />
     </td>
     <td>
-      
+      <img width="536" height="76" alt="image" src="https://github.com/user-attachments/assets/09184b1e-7ce4-484a-90e0-72b7a306faed" />
     </td>
     <td>
-      
-    </td>
-    <td>
-      
+      <img width="506" height="229" alt="image" src="https://github.com/user-attachments/assets/94e6d600-90b9-4248-8ff9-582644779dec" />
     </td>
   </tr>
 </table>
