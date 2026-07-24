@@ -20,6 +20,13 @@ class SensorMongoDB:
         self.client = MongoClient(uri)
         self.db = self.client[db_name]
         self.collection = self.db["sensor_readings"]
+        self.collection.create_index(
+            [
+                ("ts", 1),
+                ("device", 1)
+            ],
+            name="timestamp_device_unique"
+        )
         logger.info(
             "MongoDB client initialized. Database: %s, Collection: sensor_readings",
             db_name
@@ -96,45 +103,74 @@ class SensorMongoDB:
             print("Batch insertion failed:", e)
             raise
 
-    def update_batch(self, data_list: list[dict], batch_size: int = 1000):
-        logger.info("Starting batch update. Records: %s, Batch size: %s", len(data_list), batch_size)
+    def update_batch(
+            self,
+            data_list: list[dict],
+            batch_size: int = 1000
+    ):
+        logger.info(
+            "Starting batch update. Records: %s, Batch size: %s",
+            len(data_list),
+            batch_size
+        )
 
         try:
             operations = []
-            for item in data_list:
-                filter_query = {
-                    "ts": item["ts"],
-                    "device": item["device"]
-                }
+            total_matched = 0
+            total_modified = 0
 
+            for item in data_list:
                 update_fields = {
-                    k: v for k, v in item.items()
-                    if k not in ["ts", "device"]
+                    key: value
+                    for key, value in item.items()
+                    if key not in ["ts", "device"]
                 }
 
                 operations.append(
                     UpdateOne(
-                        filter_query,
-                        {"$set": update_fields},
-                        upsert=False
+                        {
+                            "ts": item["ts"],
+                            "device": item["device"]
+                        },
+                        {
+                            "$set": update_fields
+                        }
                     )
                 )
 
-                if len(operations) >= batch_size:
-                    results = self.collection.bulk_write(operations, ordered=False)
-                    logger.info("matched: %s", results.matched_count)
-                    logger.info("modified: %s", results.modified_count)
-                    print("matched:", results.matched_count)
-                    print("modified:", results.modified_count)
+                if len(operations) == batch_size:
+                    result = self.collection.bulk_write(
+                        operations,
+                        ordered=False
+                    )
+
+                    total_matched += result.matched_count
+                    total_modified += result.modified_count
                     operations = []
 
             if operations:
-                self.collection.bulk_write(operations, ordered=False)
-            logger.info("Updated %s records in batches of %s.", len(data_list), batch_size)
-            print(f"Updated {len(data_list)} records in batches of {batch_size}.")
+                result = self.collection.bulk_write(
+                    operations,
+                    ordered=False
+                )
+
+                total_matched += result.matched_count
+                total_modified += result.modified_count
+
+            logger.info(
+                "Update finished. Matched: %s Modified: %s",
+                total_matched,
+                total_modified
+            )
+
+            print(f"Matched: {total_matched}")
+            print(f"Modified: {total_modified}")
+
         except Exception as e:
-            logger.exception("Batch update failed: %s", e)
-            print("Batch update failed:", e)
+            logger.exception(
+                "Batch update failed: %s",
+                e
+            )
             raise
 
     # -----------------------------
@@ -221,4 +257,30 @@ class SensorMongoDB:
         except Exception as e:
             logger.exception("Failed to clear database: %s", e)
             print("Failed to clear database:", e)
+            raise
+
+    def get_all_records(self):
+        """
+        Retrieve all sensor records from MongoDB.
+        """
+        try:
+            records = list(
+                self.collection.find(
+                    {},
+                    {"_id": 0}
+                )
+            )
+
+            logger.info(
+                "Retrieved %s records from database",
+                len(records)
+            )
+
+            return records
+
+        except Exception as e:
+            logger.exception(
+                "Failed to retrieve records: %s",
+                e
+            )
             raise
