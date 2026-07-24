@@ -32,16 +32,16 @@ The `DataAnalyzer` class is responsible for data quality checks before ingestion
 <table>
   <tr>
     <td>
-      <img src="images/step1.png" width="250">
+      
     </td>
     <td>
-      <img src="images/step2.png" width="250">
+      
     </td>
     <td>
-      <img src="images/step3.png" width="250">
+      
     </td>
     <td>
-      <img src="images/step4.png" width="250">
+      
     </td>
   </tr>
 </table>
@@ -51,20 +51,17 @@ _Maintenance engineer:_
 As a maintenance engineer, I want the data ingestion service to report errors when the database is unavailable so that problems can be resolved.
 
 Solution:  
-The `SensorMongoDB` class implements connection monitoring using the `check_connection()` method. Database operations are wrapped with exception handling, and failures are recorded using Python logging. The system creates log entries containing timestamps, severity levels, and error descriptions, allowing maintenance engineers to investigate problems.
+The `SensorMongoDB` class implements connection monitoring using the `check_connection()` method. Database operations are wrapped with exception handling, and failures are recorded using Python logging. The system creates log entries containing timestamps, severity levels, and error descriptions, allowing maintenance engineers to investigate problems. Additionally, analysis history and update history logs can be observed, which is important for reviewing of what was already done.
 <table>
   <tr>
     <td>
-      <img src="images/step1.png" width="250">
+      <img width="395" height="189" alt="image" src="https://github.com/user-attachments/assets/ec668dcf-43cc-48bf-b8b4-80fe952d8520" />
     </td>
     <td>
-      <img src="images/step2.png" width="250">
+      <img width="333" height="184" alt="image" src="https://github.com/user-attachments/assets/c9d28cc6-e3cb-442d-a938-488e5d943ca6" />
     </td>
     <td>
-      <img src="images/step3.png" width="250">
-    </td>
-    <td>
-      <img src="images/step4.png" width="250">
+      <img width="994" height="484" alt="image" src="https://github.com/user-attachments/assets/4a745a76-e1eb-44fb-b314-b7c2cabd9519" />
     </td>
   </tr>
 </table>
