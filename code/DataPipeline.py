@@ -163,8 +163,9 @@ class DataPipeline:
             ]
         )
 
-        file_exists = os.path.exists(
-            self.update_history_log
+        file_exists = (
+            os.path.exists(self.update_history_log)
+            and os.path.getsize(self.update_history_log) > 0
         )
 
         result.to_csv(
@@ -302,8 +303,10 @@ class DataPipeline:
             ]
         )
 
-        file_exists = os.path.exists(self.historical_analysis_log)
-
+        file_exists = (
+            os.path.exists(self.historical_analysis_log)
+            and os.path.getsize(self.historical_analysis_log) > 0
+        )
         result.to_csv(
             self.historical_analysis_log,
             mode="a",
