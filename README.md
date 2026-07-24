@@ -29,7 +29,22 @@ MongoDB was selected because of its flexible document-based structure. Initially
 
 **Detect incorrect or missing sensor data**
 The `DataAnalyzer` class is responsible for data quality checks before ingestion. It analyzes the dataset, detects missing values, removes incomplete records or fills missing values depending on the selected strategy, and removes duplicate measurements before storing the data.
-
+<table>
+  <tr>
+    <td>
+      <img src="images/step1.png" width="250">
+    </td>
+    <td>
+      <img src="images/step2.png" width="250">
+    </td>
+    <td>
+      <img src="images/step3.png" width="250">
+    </td>
+    <td>
+      <img src="images/step4.png" width="250">
+    </td>
+  </tr>
+</table>
 ---
 
 _Maintenance engineer:_  
@@ -37,12 +52,53 @@ As a maintenance engineer, I want the data ingestion service to report errors wh
 
 Solution:  
 The `SensorMongoDB` class implements connection monitoring using the `check_connection()` method. Database operations are wrapped with exception handling, and failures are recorded using Python logging. The system creates log entries containing timestamps, severity levels, and error descriptions, allowing maintenance engineers to investigate problems.
-
+<table>
+  <tr>
+    <td>
+      <img src="images/step1.png" width="250">
+    </td>
+    <td>
+      <img src="images/step2.png" width="250">
+    </td>
+    <td>
+      <img src="images/step3.png" width="250">
+    </td>
+    <td>
+      <img src="images/step4.png" width="250">
+    </td>
+  </tr>
+</table>
 ---
 
 _Data analyst_  
 As a data analyst, I want to retrieve historical sensor measurements efficiently so that I can analyze environmental trends.  
 
 Solution:  
-The system provides query methods for retrieving stored measurements from MongoDB. Analysts can retrieve records using specific key combinations (`ts` and `device`) or search by selected sensor attributes. The `distinct()` functionality allows users to retrieve available unique values for a field and then request all historical measurements related to the selected value.  
-For example, an analyst can select a specific sensor device and retrieve all historical measurements recorded by that device for further environmental trend analysis.
+The system provides query methods for retrieving stored measurements from MongoDB. Analysts can retrieve records using specific key combinations (`ts` and `device`) or search by selected sensor attributes. The `get_unique_values()` functionality allows users to retrieve available unique values for a field and then request all historical measurements related to the selected value.  
+
+Example usage:  
+An analyst wants to investigate how the temperature changed during a specific period. Using the CLI interface, the analyst selects the temperature sensor, chooses a starting date and hour, and defines the analysis duration (for example, 6 hours or 3 days). The system retrieves the corresponding measurements from MongoDB and provides statistical results that help identify minimym, maximum and average temperature during chose period.
+
+<table>
+  <tr>
+    <td>
+      <img width="396" height="187" alt="image" src="https://github.com/user-attachments/assets/22f152b3-dd65-46f0-ab8c-b64c2a8af0b0" />
+    </td>
+    <td>
+      <img width="389" height="116" alt="image" src="https://github.com/user-attachments/assets/1188e056-4bdf-4023-9f07-22042ec5a094" />
+    </td>
+    <td>
+      <img width="308" height="167" alt="image" src="https://github.com/user-attachments/assets/54a9bbdd-674e-40e3-bbe8-c0f097c6c8e6" />
+    </td>
+    <td>
+      <img width="292" height="231" alt="image" src="https://github.com/user-attachments/assets/8258710f-1e6e-4fdb-a7a2-4189f9900f63" />
+    </td>
+    <td>
+      <img width="296" height="558" alt="image" src="https://github.com/user-attachments/assets/ab4b16fe-a45f-4ac6-ac32-c466433efec7" />
+    </td>
+    <td>
+      <img width="395" height="194" alt="image" src="https://github.com/user-attachments/assets/115cd09c-9875-4ab0-9375-c939c9c583bb" />
+    </td>
+  </tr>
+</table>
+
