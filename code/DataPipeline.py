@@ -33,7 +33,7 @@ class DataPipeline:
         self.update_rows = None
         self.test_rows = None
         self.historical_analysis_log = "./logs/analysis_history_log.csv"
-        self.update_history_log = "./logs/update_history.csv"
+        self.update_history_log = "./logs/update_history_logs.csv"
 
     def __convert_timestamps_to_date(self):
         """
@@ -71,17 +71,6 @@ class DataPipeline:
         self.update_rows = None
         self.test_rows = None
 
-    # def check_latest_records(self):
-    #     """
-    #     Check the latest records in MongoDB based on the test rows.
-    #     """
-    #     if self.test_rows is None:
-    #         print("No test records available.")
-    #         return
-    #     print(f"\n{self.n_records} random records before adding extra columns")
-    #     for i, last_record in enumerate(self.database.get_by_keys(keys=list(zip(self.test_rows["ts"], self.test_rows["device"])))):
-    #         print(f"Record {i+1}: {last_record}")
-
     def insert_data_in_batches(self):
         """
         Insert the base columns of the IoT telemetry data into MongoDB in batches.
@@ -106,6 +95,7 @@ class DataPipeline:
             "6 Hours": pd.Timedelta(hours=6),
             "12 Hours": pd.Timedelta(hours=12),
             "1 Day": pd.Timedelta(days=1),
+            "3 Days": pd.Timedelta(days=3),
             "7 Days": pd.Timedelta(days=7),
             "30 Days": pd.Timedelta(days=30)
         }
@@ -232,6 +222,7 @@ class DataPipeline:
             "6 Hours": pd.Timedelta(hours=6),
             "12 Hours": pd.Timedelta(hours=12),
             "1 Day": pd.Timedelta(days=1),
+            "3 Days": pd.Timedelta(days=3),
             "7 Days": pd.Timedelta(days=7),
             "30 Days": pd.Timedelta(days=30)
         }

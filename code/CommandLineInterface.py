@@ -141,6 +141,7 @@ class CommandLineInterface:
                 "6 Hours",
                 "12 Hours",
                 "1 Day",
+                "3 Days",
                 "7 Days",
                 "30 Days"
             ]
@@ -218,6 +219,7 @@ class CommandLineInterface:
                 "6 Hours",
                 "12 Hours",
                 "1 Day",
+                "3 Days",
                 "7 Days",
                 "30 Days"
             ]
