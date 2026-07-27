@@ -159,24 +159,21 @@ C --> D
 ```mermaid
 flowchart LR
 
-subgraph Simulation["Simulation Environment"]
+subgraph Simulation["Simulation"]
     A[CSV Dataset]
 end
 
-subgraph Processing["Data Processing"]
+subgraph Deployment["Future Deployment"]
+    B[Environmental Sensors]
+    C[MQTT Broker / REST API]
+    B --> C
+end
+
+subgraph System["Application"]
     D[DataPipeline]
     E[(MongoDB)]
     F[CLI Application]
-    
-    D --> E
-    E --> F
-end
-
-subgraph Real["Future Real-World Deployment"]
-    B[Environmental Sensors]
-    C[MQTT Broker / REST API]
-    
-    B --> C
+    D --> E --> F
 end
 
 A --> D
