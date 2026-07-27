@@ -10,6 +10,21 @@ To run this project, follow the instruction below:
 Regarding functions:  
 When you insert the data, the program loads the initial dataset with only four primary columns (ts, device, temp, humidity) into MongoDB. To add the remained columns into database you can both update existing documents (only the first 1,000 rows for testing purposes) and add them as separate documents. To demonstrate that the process works correctly, the program displays five randomly selected records from the updated subset both before and after the update.
 
+## Architecture Overview
+```mermaid
+flowchart LR
+
+A[CSV Dataset] --> B[DataPipeline]
+B --> C[(MongoDB)]
+C --> D[CLI Application]
+
+D --> E[Data Analysis]
+D --> F[Data Update]
+D --> G[History Logs]
+```
+
+This prototype simulates an environmental monitoring system. Historical sensor measurements are imported from CSV files into MongoDB, where they can be queried, analyzed and updated through a command-line interface.
+
 ## Usage scenario
 **Environmental Monitoring System for a Municipality**  
 The goal of the system is to collect and store data from environmental sensors installed across a city. The collected measurements are used to monitor air quality, detect unusual environmental conditions, and support future analysis. The system receives sensor measurements from multiple devices. Initially, sensors provide basic measurements such as temperature and humidity. Over time, additional sensors may be installed to measure parameters such as carbon monoxide, smoke, LPG, motion, and light levels.  
