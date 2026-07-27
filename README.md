@@ -32,7 +32,7 @@ The application works with a simulated IoT environment using dataset mentioned a
 Simulation period:
 - 12 July 2020 – 20 July 2020
 
-Sensors: timestamp, device, temperatur, humidity, co, lpg, smoke, motion, light
+Sensors: timestamp, device, temperature, humidity, co, lpg, smoke, motion, light
 
 All examples and screenshots presented below refer to this simulation period.
 
