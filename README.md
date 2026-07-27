@@ -49,7 +49,7 @@ Sensors: timestamp, device, temperature, humidity, co, lpg, smoke, motion, light
 
 All examples and screenshots presented below refer to this simulation period.
 
-**Sumulation story**  
+### Sumulation story
 The simulation represents an indoor environmental monitoring system deployed in a building.
 
 The dataset contains historical telemetry data collected from multiple sensor devices. Each device represents an environmental monitoring unit installed in a different location. The sensors continuously measure temperature, humidity, carbon monoxide (CO), LPG, smoke level, light intensity, and motion activity.
