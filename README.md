@@ -19,7 +19,7 @@ B --> C[(MongoDB)]
 C --> D[CLI Application]
 
 D --> E[Data Analysis]
-D --> F[Data Manipulations  (connect, insert, update, clean)]
+D --> F[Data Manipulations: connect, insert, update, clean]
 D --> G[Database Analysis]
 D --> H[Logs]
 ```
