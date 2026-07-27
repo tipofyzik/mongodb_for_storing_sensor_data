@@ -26,6 +26,16 @@ D --> H[Logs: errors, analysis and update history]
 
 This prototype simulates an environmental monitoring system. Historical sensor measurements are imported from CSV files into MongoDB, where they can be queried, analyzed and updated through a command-line interface.
 
+## Simulation Environment
+The application works with a simulated IoT environment.
+
+Simulation period:
+- 12 July 2020 – 20 July 2020
+
+Sensors: timestamp, device, temperatur, humidity, co, lpg, smoke, motion, light
+
+All examples and screenshots presented below refer to this simulation period.
+
 ## Usage scenario
 **Environmental Monitoring System for a Municipality**  
 The goal of the system is to collect and store data from environmental sensors installed across a city. The collected measurements are used to monitor air quality, detect unusual environmental conditions, and support future analysis. The system receives sensor measurements from multiple devices. Initially, sensors provide basic measurements such as temperature and humidity. Over time, additional sensors may be installed to measure parameters such as carbon monoxide, smoke, LPG, motion, and light levels.  
