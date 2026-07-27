@@ -131,3 +131,48 @@ An analyst wants to investigate how the temperature changed during a specific pe
 </table>
 
 ## From Simulation to Real Deployment
+<table>
+<tr>
+
+<td width="50%">
+
+## Simulation Architecture
+
+```mermaid
+flowchart LR
+
+A[CSV Dataset]
+B[DataPipeline]
+C[(MongoDB)]
+D[CLI Application]
+
+A --> B
+B --> C
+C --> D
+```
+
+</td>
+
+<td width="50%">
+
+## Future Real-World Deployment
+
+```mermaid
+flowchart LR
+
+A[Environmental Sensors]
+B[MQTT Broker / REST API]
+C[DataPipeline]
+D[(MongoDB)]
+E[CLI Application]
+
+A --> B
+B --> C
+C --> D
+D --> E
+```
+
+</td>
+
+</tr>
+</table>
