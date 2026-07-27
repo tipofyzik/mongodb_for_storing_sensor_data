@@ -159,10 +159,6 @@ C --> D
 ```mermaid
 flowchart LR
 
-subgraph Simulation["Simulation Environment"]
-A[CSV Dataset]
-end
-
 subgraph Real["Future Real-World Deployment"]
 B[Environmental Sensors]
 C[MQTT Broker / REST API]
