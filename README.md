@@ -4,6 +4,7 @@
 - [How to use](#how-to-use)
 - [Architecture Overview](#architecture-overview)
 - [Simulation Environment](#simulation-environment)
+    - [Sumulation story](#sumulation-story)
 - [Usage scenario](#usage-scenario)
 - [From Simulation to Real Deployment](#from-simulation-to-real-deployment)
 
