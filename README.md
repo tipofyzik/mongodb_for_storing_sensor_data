@@ -27,7 +27,7 @@ D --> H[Logs: errors, analysis and update history]
 This prototype simulates an environmental monitoring system. Historical sensor measurements are imported from CSV files into MongoDB, where they can be queried, analyzed and updated through a command-line interface.
 
 ## Simulation Environment
-The application works with a simulated IoT environment.
+The application works with a simulated IoT environment using dataset mentioned above.
 
 Simulation period:
 - 12 July 2020 – 20 July 2020
