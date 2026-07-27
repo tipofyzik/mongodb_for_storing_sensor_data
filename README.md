@@ -19,8 +19,9 @@ B --> C[(MongoDB)]
 C --> D[CLI Application]
 
 D --> E[Data Analysis]
-D --> F[Data Update]
-D --> G[History Logs]
+D --> F[Data Manipulations  (connect, insert, update, clean)]
+D --> G[Database Analysis]
+D --> H[Logs]
 ```
 
 This prototype simulates an environmental monitoring system. Historical sensor measurements are imported from CSV files into MongoDB, where they can be queried, analyzed and updated through a command-line interface.
