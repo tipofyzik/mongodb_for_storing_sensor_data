@@ -156,23 +156,27 @@ C --> D
 <td width="50%">
 
 ## Future Real-World Deployment
-
 ```mermaid
 flowchart LR
 
-A[Environmental Sensors]
-B[MQTT Broker / REST API]
-C[DataPipeline]
-D[(MongoDB)]
-E[CLI Application]
+subgraph Simulation["Simulation Environment"]
+A[CSV Dataset]
+end
 
-A --> B
+subgraph Real["Future Real-World Deployment"]
+B[Environmental Sensors]
+C[MQTT Broker / REST API]
+end
+
+subgraph Processing["Data Processing"]
+D[DataPipeline]
+E[(MongoDB)]
+F[CLI Application]
+end
+
+A --> D
 B --> C
 C --> D
 D --> E
+E --> F
 ```
-
-</td>
-
-</tr>
-</table>
