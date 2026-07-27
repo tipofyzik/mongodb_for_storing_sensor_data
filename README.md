@@ -49,7 +49,6 @@ Sensors: timestamp, device, temperature, humidity, co, lpg, smoke, motion, light
 
 All examples and screenshots presented below refer to this simulation period.
 
-## Simulation Environment Scenario
 **Sumulation story**  
 The simulation represents an indoor environmental monitoring system deployed in a building.
 
