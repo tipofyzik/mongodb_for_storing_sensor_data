@@ -157,3 +157,6 @@ end
 A --> D
 C --> D
 ```
+The simulation architecture represents a controlled testing environment where environmental data is provided through a static CSV dataset. This approach allows the system to validate the data processing pipeline, database operations, and analytical functionality without requiring physical hardware. The main purpose of the simulation is to reproduce realistic data flows and verify that the application behaves correctly before deployment.
+
+The future real-world deployment extends the same architecture by replacing the static dataset with live data sources. Environmental sensors collect measurements from the physical environment and transmit them through communication protocols such as MQTT or REST API. The DataPipeline remains responsible for processing incoming data, while MongoDB and the CLI application continue to provide storage, analysis, and management capabilities. This design ensures that the transition from simulation to real deployment requires minimal changes to the existing software architecture.
