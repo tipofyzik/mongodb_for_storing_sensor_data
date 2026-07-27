@@ -21,7 +21,7 @@ C --> D[CLI Application]
 D --> E[Initial Data Analysis & Preparation: cleaning, handling missing values, statistics]
 D --> F[Data Manipulations: connect to, insert to, update, and clear database]
 D --> G[Database Analysis: min, max, avg over a time period]
-D --> H[Logs]
+D --> H[Logs: errors, analysis and update history]
 ```
 
 This prototype simulates an environmental monitoring system. Historical sensor measurements are imported from CSV files into MongoDB, where they can be queried, analyzed and updated through a command-line interface.
