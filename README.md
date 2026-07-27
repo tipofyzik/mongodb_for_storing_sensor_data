@@ -131,49 +131,27 @@ An analyst wants to investigate how the temperature changed during a specific pe
 </table>
 
 ## From Simulation to Real Deployment
-<table>
-<tr>
-
-<td width="50%">
-
-## Simulation Architecture
-
 ```mermaid
 flowchart LR
 
-A[CSV Dataset]
-B[DataPipeline]
-C[(MongoDB)]
-D[CLI Application]
-
-A --> B
-B --> C
-C --> D
-```
-
-</td>
-
-<td width="50%">
-
-## Future Real-World Deployment
-```mermaid
-flowchart LR
-
-subgraph Simulation["Simulation"]
+subgraph Simulation["Simulation Environment"]
     A[CSV Dataset]
 end
 
-subgraph Deployment["Future Deployment"]
-    B[Environmental Sensors]
-    C[MQTT Broker / REST API]
-    B --> C
-end
-
-subgraph System["Application"]
+subgraph Processing["Data Processing"]
     D[DataPipeline]
     E[(MongoDB)]
     F[CLI Application]
-    D --> E --> F
+    
+    D --> E
+    E --> F
+end
+
+subgraph Real["Future Real-World Deployment"]
+    B[Environmental Sensors]
+    C[MQTT Broker / REST API]
+    
+    B --> C
 end
 
 A --> D
