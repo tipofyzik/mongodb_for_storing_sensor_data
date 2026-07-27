@@ -1,5 +1,13 @@
 # Mongo database for storing IoT sensor data
 
+## Navigation
+- [How to use](#How to use)
+- [Architecture Overview](#Architecture Overview)
+- [Simulation Environment](#Simulation Environment)
+- [Usage scenario](#Usage scenario)
+- [From Simulation to Real Deployment](#From Simulation to Real Deployment)
+
+## How to use
 To run this project, follow the instruction below:
 1. Download the repository "code", download [Environmental Sensor Telemetry Data](https://www.kaggle.com/datasets/garystafford/environmental-sensor-data-132k) from kaggle and put it into "data" folder inside "code" directory.  
 2. Download Docker Desktop and run it.  
@@ -122,3 +130,4 @@ An analyst wants to investigate how the temperature changed during a specific pe
   </tr>
 </table>
 
+## From Simulation to Real Deployment
