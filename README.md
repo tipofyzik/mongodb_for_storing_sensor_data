@@ -18,8 +18,8 @@ A[CSV Dataset] --> B[DataPipeline]
 B --> C[(MongoDB)]
 C --> D[CLI Application]
 
-D --> E[Initial Data Analysis & Preparation]
-D --> F[Data Manipulations: connect, insert, update, clean]
+D --> E[Initial Data Analysis & Preparation: cleaning, handling missing values, statistics]
+D --> F[Data Manipulations: connect, insert, update, clear]
 D --> G[Database Analysis]
 D --> H[Logs]
 ```
