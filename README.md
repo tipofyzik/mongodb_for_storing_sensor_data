@@ -1,11 +1,11 @@
 # Mongo database for storing IoT sensor data
 
 ## Navigation
-- [How to use](#How to use)
-- [Architecture Overview](#Architecture Overview)
-- [Simulation Environment](#Simulation Environment)
-- [Usage scenario](#Usage scenario)
-- [From Simulation to Real Deployment](#From Simulation to Real Deployment)
+- [How to use](#how-to-use)
+- [Architecture Overview](#architecture-overview)
+- [Simulation Environment](#simulation-environment)
+- [Usage scenario](#usage-scenario)
+- [From Simulation to Real Deployment](#from-simulation-to-real-deployment)
 
 ## How to use
 To run this project, follow the instruction below:
