@@ -186,7 +186,6 @@ subgraph Processing["Current Data Processing"]
 end
 
 subgraph Real["Future Real-World Deployment"]
-    direction LR
     B[Environmental Sensors]
     C[MQTT Broker / REST API]
     G[Advanced Analytics Module]
