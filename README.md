@@ -48,26 +48,33 @@ Simulation period:
 
 Sensors: timestamp, device, temperature, humidity, co, lpg, smoke, motion, light.
 
-All examples and screenshots presented below refer to this simulation period.
+The purpose of this simulation is to validate the complete IoT data processing workflow before deployment with real sensor streams. The CSV file replaces live sensor communication and acts as an incoming telemetry source.
+
+The implemented pipeline supports:
+- importing sensor measurements into MongoDB;
+- checking and cleaning sensor data before storage;
+- extending stored records with additional sensor parameters;
+- retrieving measurements for selected time intervals;
+- calculating basic statistical indicators;
+- recording performed analysis and update operations.
+
+Due to the limited one-week dataset, the system focuses on short-term indoor environmental analysis rather than long-term historical trend evaluation.
 
 ### Sumulation story
-The simulation represents an indoor environmental monitoring system deployed in a building.
+The simulation represents a prototype indoor environmental monitoring system deployed inside a single building. The building contains several monitored indoor areas represented by independent sensor devices. Each device continuously produces environmental telemetry measurements, including temperature, humidity, gas-related indicators, motion, and light intensity. 
 
-The dataset contains sensor telemetry data collected from multiple sensor devices. Each device represents an environmental monitoring unit installed in a different location. The dataset contains measurements of temperature, humidity, carbon monoxide (CO), LPG, smoke level, light intensity, and motion activity.
+In this scenario, the system administrator wants to validate the behaviour of the indoor environmental monitoring system and ensure that sensor data is correctly processed and stored. The administrator can investigate environmental conditions during selected monitoring periods, compare measurements between different sensor devices, and verify that sensor updates and data processing operations are performed correctly.
 
-The simulation uses the historical period from **12 July 2020 00:00 UTC to 19 July 2020 23:59 UTC**. During this week, sensor devices generated measurements that simulate a continuous monitoring process inside different areas of a building.
+For example, the administrator can analyze temperature or humidity variations within a selected time interval, review smoke or gas sensor activity, and check the history of performed analysis and update operations.
 
-In this scenario, the system administrator wants to evaluate the environmental conditions and sensor behaviour over time. For example, the administrator can investigate temperature changes during working hours, analyze smoke or gas sensor activity, or compare environmental conditions between different sensor devices.
+The administrator can:
+- validate incoming sensor data quality;
+- store measurements in MongoDB;
+- enrich existing records with additional sensor attributes;
+- analyze environmental conditions during selected time periods;
+- review previous analysis and update operations.
 
-The CSV dataset acts as a replacement for real-time sensor streams. Instead of receiving measurements directly from physical devices, the DataPipeline reads sensor records and processes them as if they were incoming data from an IoT monitoring system.  
-
-Using this simulation, the complete workflow can be tested:
-- importing sensor measurements into the database,
-- analyzing sensor values over selected time ranges,
-- updating existing measurements,
-- reviewing analysis and update history through logs.  
-
-The simulation provides a safe environment for validating the system before connecting it to real sensor infrastructure. 
+The simulation demonstrates how an IoT telemetry processing workflow can be tested before connecting the system to real sensor infrastructure.
 
 ## Usage scenario
 **Building Environmental Monitoring System**  
