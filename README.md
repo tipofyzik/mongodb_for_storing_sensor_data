@@ -4,7 +4,7 @@
 - [How to use](#how-to-use)
 - [Architecture Overview](#architecture-overview)
 - [Simulation Environment](#simulation-environment)
-    - [Sumulation story](#sumulation-story)
+    - [Simulation story](#simulation-story)
 - [Usage scenario](#usage-scenario)
 - [From Simulation to Real Deployment](#from-simulation-to-real-deployment)
 
@@ -17,7 +17,7 @@ To run this project, follow the instruction below:
 <img width="407" height="184" alt="image" src="https://github.com/user-attachments/assets/99d281bb-8c13-47c3-978a-0a45416e8e47" />
 
 Regarding functions:  
-When you insert the data, the program loads the initial dataset with only four primary columns (ts, device, temp, humidity) into MongoDB. To add the remained columns into database you can both update existing documents (only the first 1,000 rows for testing purposes) and add them as separate documents. To demonstrate that the process works correctly, the program displays five randomly selected records from the updated subset both before and after the update.
+When you insert the data, the program loads the initial dataset with only four primary columns (ts, device, temp, humidity) into MongoDB. To add the remained columns into database you can both update existing documents and add them as separate documents. To demonstrate the update process, the user can select a time interval and update the corresponding records with additional attributes. A small number of records is displayed before and after the update for verification purposes..
 
 ## Architecture Overview
 ```mermaid
@@ -60,7 +60,7 @@ The implemented pipeline supports:
 
 Due to the limited one-week dataset, the system focuses on short-term indoor environmental analysis rather than long-term historical trend evaluation.
 
-### Sumulation story
+### Simulation story
 The simulation represents a prototype indoor environmental monitoring system deployed inside a single building. The building contains several monitored indoor areas represented by independent sensor devices. Each device continuously produces environmental telemetry measurements, including temperature, humidity, gas-related indicators, motion, and light intensity. 
 
 In this scenario, facility managers use the system to review indoor environmental conditions, while maintenance engineers ensure that the data processing and storage components operate correctly. Data analysts use the stored measurements to perform short-term historical analysis and evaluate sensor behaviour.
@@ -90,7 +90,7 @@ _Facility manager:_
 
 Solution:  
 **Store sensor measurements automatically**
-The `DataPipeline` class provides ingestion of IoT telemetry data. The dataset is loaded, processed, and inserted into MongoDB using batch insertion. The `insert_batch()` method in the `SensorMongoDB` class stores measurements in batches of 1,000 records, which improves performance when handling larger datasets.
+The `DataPipeline` class provides ingestion of IoT telemetry data. The dataset can be analysed and cleaned before insertion, after which the processed measurements are stored in MongoDB using batch insertion. The `insert_batch()` method in the `SensorMongoDB` class stores measurements in batches of 1,000 records, which improves performance when handling larger datasets.
 
 **Add new sensor types without changing the database structure**
 MongoDB was selected because of its flexible document-based structure. Initially, only the core attributes (`ts`, `device`, `temp`, and `humidity`) are stored. Additional sensor attributes (`co`, `lpg`, `smoke`, `motion`, and `light`) are added later using the `update_batch()` method. This demonstrates that new sensor measurements can be introduced without redesigning the database schema.
@@ -200,7 +200,7 @@ A --> D
 ```
 The simulation architecture represents a controlled testing environment where environmental data is provided through a static CSV dataset. This approach allows the system to validate the data processing pipeline, database operations, and analytical functionality without requiring physical hardware. The main purpose of the simulation is to reproduce realistic data flows and verify that the application behaves correctly before deployment.
 
-The future real-world deployment extends the same architecture by replacing the static dataset with live sensor data sources. Environmental sensors collect measurements from physical locations and transmit them through communication protocols such as MQTT or REST API. The DataPipeline remains responsible for receiving and processing incoming telemetry data, while MongoDB continues to provide persistent storage.
+The future real-world deployment extends the same architecture by replacing the static dataset with live sensor data sources. Environmental sensors collect measurements from physical locations and transmit them through communication protocols such as MQTT or REST API. The DataPipeline would be extended to process incoming telemetry data from these sources, while MongoDB continues to provide persistent storage.
 
 However, a real deployment would require additional analytical capabilities beyond the current prototype. Since the current simulation is based on a limited one-week dataset, the implemented analysis focuses on selected short-term periods and basic statistical calculations. A production system with larger sensor networks and longer observation periods would require additional DataPipeline functionality for long-term trend analysis, historical comparisons, anomaly detection, and potentially aggregation of data from multiple buildings or locations.
 
