@@ -83,7 +83,7 @@ The goal of the system is to collect and store data from environmental sensors i
 The current implementation uses one week of historical sensor measurements as a simulation of a real monitoring system. This simulation allows the complete data processing workflow to be validated, including data ingestion, storage, analysis, updating, and logging, before integrating the application with live sensor devices.
 
 **User stories:**  
-_Facility manager:_  
+_Facility manager:_
 - As a facility manager, I want sensor measurements to be stored automatically so that I can monitor indoor environmental conditions.
 - As a facility manager, I want the system to support new sensor types so that the monitoring system can evolve without changing the database structure.
 - As a facility manager, I want to detect missing or inconsistent sensor data so that the stored measurements remain reliable.
@@ -95,7 +95,7 @@ The `DataPipeline` class provides ingestion of IoT telemetry data. The dataset i
 **Add new sensor types without changing the database structure**
 MongoDB was selected because of its flexible document-based structure. Initially, only the core attributes (`ts`, `device`, `temp`, and `humidity`) are stored. Additional sensor attributes (`co`, `lpg`, `smoke`, `motion`, and `light`) are added later using the `update_batch()` method. This demonstrates that new sensor measurements can be introduced without redesigning the database schema.
 
-**Detect incorrect or missing sensor data**
+**Detect missing or inconsistent sensor data**
 The `DataAnalyzer` class is responsible for data quality checks before ingestion. It analyzes the dataset, detects missing values, removes incomplete records or fills missing values depending on the selected strategy, and removes duplicate measurements before storing the data.
 <table>
   <tr>
@@ -112,7 +112,7 @@ The `DataAnalyzer` class is responsible for data quality checks before ingestion
 </table>
 ---
 
-_Maintenance engineer:_  
+_Maintenance engineer:_
 - As a maintenance engineer, I want the data ingestion service to report errors when the database is unavailable so that problems can be resolved.
 
 Solution:  
@@ -132,12 +132,13 @@ The `SensorMongoDB` class implements connection monitoring using the `check_conn
 </table>
 ---
 
-_Data analyst:_  
+_Data analyst:_
 - As a data analyst, I want to analyse stored sensor measurements over selected time intervals so that I can evaluate indoor environmental conditions.  
 - As a data analyst, I want to calculate statistical values such as minimum, maximum, and average sensor readings so that I can understand sensor behaviour during the selected period.
 
 Solution:  
-The system provides query methods for retrieving stored measurements from MongoDB. Analysts can retrieve records using specific key combinations (`ts` and `device`) or search by selected sensor attributes. The `get_unique_values()` functionality allows users to retrieve available unique values for a field and then request all available measurements related to the selected value.  
+The system provides functionality for retrieving and analysing stored sensor measurements from the database. The DataPipeline allows analysts to select a sensor feature, monitoring date, starting hour, and analysis duration in order to retrieve the corresponding historical records. After filtering the measurements for the selected time interval, the system calculates statistical indicators including minimum, maximum, and average values for the chosen sensor attribute. The analysis results are stored in the analysis history log, allowing previously performed analyses to be reviewed.  
+Additionally, analysts can compare measurements between different sensor devices by retrieving records associated with specific device identifiers. This allows evaluation of short-term variations in indoor environmental conditions during the available monitoring period.
 
 Example usage:  
 An analyst wants to investigate how the temperature changed during a specific period. Using the CLI interface, the analyst selects the temperature sensor, chooses a starting date and hour, and defines the analysis duration (for example, 6 hours or 3 days). The system retrieves the corresponding measurements from MongoDB and provides statistical results that help identify minimum, maximum and average temperature within the selected period.
