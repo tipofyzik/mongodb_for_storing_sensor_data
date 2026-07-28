@@ -53,13 +53,13 @@ All examples and screenshots presented below refer to this simulation period.
 ### Sumulation story
 The simulation represents an indoor environmental monitoring system deployed in a building.
 
-The dataset contains historical telemetry data collected from multiple sensor devices. Each device represents an environmental monitoring unit installed in a different location. The sensors continuously measure temperature, humidity, carbon monoxide (CO), LPG, smoke level, light intensity, and motion activity.
+The dataset contains sensor telemetry data collected from multiple sensor devices. Each device represents an environmental monitoring unit installed in a different location. The dataset contains measurements of temperature, humidity, carbon monoxide (CO), LPG, smoke level, light intensity, and motion activity.
 
 The simulation uses the historical period from **12 July 2020 00:00 UTC to 19 July 2020 23:59 UTC**. During this week, sensor devices generated measurements that simulate a continuous monitoring process inside different areas of a building.
 
 In this scenario, the system administrator wants to evaluate the environmental conditions and sensor behaviour over time. For example, the administrator can investigate temperature changes during working hours, analyze smoke or gas sensor activity, or compare environmental conditions between different sensor devices.
 
-The CSV dataset acts as a replacement for real-time sensor streams. Instead of receiving measurements directly from physical devices, the DataPipeline reads historical sensor records and processes them as if they were incoming data from an IoT monitoring system.  
+The CSV dataset acts as a replacement for real-time sensor streams. Instead of receiving measurements directly from physical devices, the DataPipeline reads sensor records and processes them as if they were incoming data from an IoT monitoring system.  
 
 Using this simulation, the complete workflow can be tested:
 - importing sensor measurements into the database,
@@ -125,11 +125,12 @@ The `SensorMongoDB` class implements connection monitoring using the `check_conn
 </table>
 ---
 
-_Data analyst_  
-As a data analyst, I want to retrieve sensor measurements for selected time intervals so that I can analyze indoor environmental conditions.
+_Data analyst:_  
+As a data analyst, I want to analyse stored sensor measurements over selected time intervals so that I can evaluate indoor environmental conditions.  
+As a data analyst, I want to calculate statistical values such as minimum, maximum, and average sensor readings so that I can understand sensor behaviour during the selected period.
 
 Solution:  
-The system provides query methods for retrieving stored measurements from MongoDB. Analysts can retrieve records using specific key combinations (`ts` and `device`) or search by selected sensor attributes. The `get_unique_values()` functionality allows users to retrieve available unique values for a field and then request all historical measurements related to the selected value.  
+The system provides query methods for retrieving stored measurements from MongoDB. Analysts can retrieve records using specific key combinations (`ts` and `device`) or search by selected sensor attributes. The `get_unique_values()` functionality allows users to retrieve available unique values for a field and then request all available measurements related to the selected value.  
 
 Example usage:  
 An analyst wants to investigate how the temperature changed during a specific period. Using the CLI interface, the analyst selects the temperature sensor, chooses a starting date and hour, and defines the analysis duration (for example, 6 hours or 3 days). The system retrieves the corresponding measurements from MongoDB and provides statistical results that help identify minimum, maximum and average temperature within the selected period.
