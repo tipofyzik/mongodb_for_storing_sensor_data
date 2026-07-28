@@ -63,7 +63,7 @@ Due to the limited one-week dataset, the system focuses on short-term indoor env
 ### Sumulation story
 The simulation represents a prototype indoor environmental monitoring system deployed inside a single building. The building contains several monitored indoor areas represented by independent sensor devices. Each device continuously produces environmental telemetry measurements, including temperature, humidity, gas-related indicators, motion, and light intensity. 
 
-In this scenario, the system administrator wants to validate the behaviour of the indoor environmental monitoring system and ensure that sensor data is correctly processed and stored. The administrator can investigate environmental conditions during selected monitoring periods, compare measurements between different sensor devices, and verify that sensor updates and data processing operations are performed correctly.
+In this scenario, facility managers use the system to review indoor environmental conditions, while maintenance engineers ensure that the data processing and storage components operate correctly. Data analysts use the stored measurements to perform short-term historical analysis and evaluate sensor behaviour.
 
 For example, the administrator can analyze temperature or humidity variations within a selected time interval, review smoke or gas sensor activity, and check the history of performed analysis and update operations.
 
@@ -78,7 +78,7 @@ The simulation demonstrates how an IoT telemetry processing workflow can be test
 
 ## Usage scenario
 **Building Environmental Monitoring System**  
-The goal of the system is to collect and store data from environmental sensors installed in different areas of a building. The collected measurements are used to monitor indoor environmental conditions, detect unusual sensor readings, and support short-term analysis. The system receives sensor measurements from multiple sensor devices. Initially, sensors provide basic measurements such as temperature and humidity. Additional sensors extend the monitoring capabilities by measuring carbon monoxide (CO), smoke, LPG, motion, and light levels.  
+The goal of the system is to collect and store data from environmental sensors installed in different areas of a building. The collected measurements are used to monitor indoor environmental conditions, validate data quality, and support short-term analysis. The system receives sensor measurements from multiple sensor devices. Initially, sensors provide basic measurements such as temperature and humidity. Additional sensors extend the monitoring capabilities by measuring carbon monoxide (CO), smoke, LPG, motion, and light levels.  
 
 The current implementation uses one week of historical sensor measurements as a simulation of a real monitoring system. This simulation allows the complete data processing workflow to be validated, including data ingestion, storage, analysis, updating, and logging, before integrating the application with live sensor devices.
 
