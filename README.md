@@ -84,9 +84,9 @@ The current implementation uses one week of historical sensor measurements as a 
 
 **User stories:**  
 _Facility manager:_  
-As a facility manager, I want sensor measurements to be stored automatically so that I can monitor indoor environmental conditions.
-As a facility manager, I want the system to support new sensor types so that the monitoring system can evolve without changing the database structure.
-As a facility manager, I want to detect missing or inconsistent sensor data so that the stored measurements remain reliable.
+- As a facility manager, I want sensor measurements to be stored automatically so that I can monitor indoor environmental conditions.
+- As a facility manager, I want the system to support new sensor types so that the monitoring system can evolve without changing the database structure.
+- As a facility manager, I want to detect missing or inconsistent sensor data so that the stored measurements remain reliable.
 
 Solution:  
 **Store sensor measurements automatically**
@@ -113,7 +113,7 @@ The `DataAnalyzer` class is responsible for data quality checks before ingestion
 ---
 
 _Maintenance engineer:_  
-As a maintenance engineer, I want the data ingestion service to report errors when the database is unavailable so that problems can be resolved.
+- As a maintenance engineer, I want the data ingestion service to report errors when the database is unavailable so that problems can be resolved.
 
 Solution:  
 The `SensorMongoDB` class implements connection monitoring using the `check_connection()` method. Database operations are wrapped with exception handling, and failures are recorded using Python logging. The system creates log entries containing timestamps, severity levels, and error descriptions, allowing maintenance engineers to investigate problems. Additionally, analysis history and update history logs can be observed, which is important for reviewing previously performed operations.
@@ -133,8 +133,8 @@ The `SensorMongoDB` class implements connection monitoring using the `check_conn
 ---
 
 _Data analyst:_  
-As a data analyst, I want to analyse stored sensor measurements over selected time intervals so that I can evaluate indoor environmental conditions.  
-As a data analyst, I want to calculate statistical values such as minimum, maximum, and average sensor readings so that I can understand sensor behaviour during the selected period.
+- As a data analyst, I want to analyse stored sensor measurements over selected time intervals so that I can evaluate indoor environmental conditions.  
+- As a data analyst, I want to calculate statistical values such as minimum, maximum, and average sensor readings so that I can understand sensor behaviour during the selected period.
 
 Solution:  
 The system provides query methods for retrieving stored measurements from MongoDB. Analysts can retrieve records using specific key combinations (`ts` and `device`) or search by selected sensor attributes. The `get_unique_values()` functionality allows users to retrieve available unique values for a field and then request all available measurements related to the selected value.  
