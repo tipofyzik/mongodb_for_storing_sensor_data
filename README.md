@@ -29,7 +29,7 @@ C --> D[CLI Application]
 
 D --> E[Initial Data Analysis & Preparation: cleaning, handling missing values, statistics]
 D --> F[Data Manipulations: connect to, insert to, update, and clear database]
-D --> G[Database Analysis: min, max, avg over a time period]
+D --> G[Short-term Statistical Analysis: min, max, average over selected periods]
 D --> H[Logs: errors, analysis and update history]
 ```
 
