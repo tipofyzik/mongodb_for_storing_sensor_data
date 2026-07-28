@@ -178,23 +178,25 @@ subgraph Processing["Current Data Processing"]
     D[DataPipeline]
     E[(MongoDB)]
     F[CLI Application]
+    H[Short-term Analysis]
     
     D --> E
-    E --> F
+    E --> H
+    H --> F
 end
 
 subgraph Real["Future Real-World Deployment"]
     B[Environmental Sensors]
     C[MQTT Broker / REST API]
-    G[Extended Data Analysis]
+    G[Advanced Analytics Module]
     
     B --> C
+    C --> D
+    E --> G
     G --> F
 end
 
 A --> D
-C --> D
-D --> G
 ```
 The simulation architecture represents a controlled testing environment where environmental data is provided through a static CSV dataset. This approach allows the system to validate the data processing pipeline, database operations, and analytical functionality without requiring physical hardware. The main purpose of the simulation is to reproduce realistic data flows and verify that the application behaves correctly before deployment.
 
